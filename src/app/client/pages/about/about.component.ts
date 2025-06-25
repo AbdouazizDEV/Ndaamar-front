@@ -15,20 +15,14 @@ export class AboutComponent {
     {
       name: 'Abdou Aziz Diop',
       role: 'Fondateur & CEO',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
+      image: 'https://res.cloudinary.com/dhivn2ahm/image/upload/v1739929505/WhatsApp_Image_2024-04-29_at_17.09.21_1_-removebg-preview_bvo4sq.jpg',
       description: 'Expert en automobile avec plus de 10 ans d\'expérience dans le secteur.'
     },
     {
-      name: 'Fatou Sall',
-      role: 'Directrice Commerciale',
-      image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face',
+      name: 'Astou Ndoye Dia',
+      role: 'Co-fondateur & Commerciale',
+      image: 'https://res.cloudinary.com/dhivn2ahm/image/upload/v1750891342/WhatsApp_Image_2025-06-25_at_22.36.36_yuwn8x.jpg',
       description: 'Spécialiste en relations clients et développement commercial.'
-    },
-    {
-      name: 'Mamadou Diallo',
-      role: 'Directeur Technique',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
-      description: 'Ingénieur automobile passionné par l\'innovation technologique.'
     }
   ];
 
