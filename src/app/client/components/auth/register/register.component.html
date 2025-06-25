@@ -1,0 +1,254 @@
+<div class="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-100 flex items-center justify-center p-4">
+  <!-- Animated Background Cars -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <!-- Car 1 -->
+    <div class="car-animation car-1">
+      <div class="car-body">
+        <div class="car-top"></div>
+        <div class="car-bottom"></div>
+        <div class="wheel wheel-front"></div>
+        <div class="wheel wheel-back"></div>
+      </div>
+    </div>
+    
+    <!-- Car 2 -->
+    <div class="car-animation car-2">
+      <div class="car-body">
+        <div class="car-top"></div>
+        <div class="car-bottom"></div>
+        <div class="wheel wheel-front"></div>
+        <div class="wheel wheel-back"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register Form Container -->
+  <div class="relative z-10 w-full max-w-lg">
+    <div class="bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20">
+      <!-- Logo -->
+      <div class="text-center mb-8">
+        <img 
+          src="https://res.cloudinary.com/dhivn2ahm/image/upload/v1740850713/Grey_and_Black2_Car_Rental_Service_Logo_nrbxc0.png" 
+          alt="Ndaamar Logo" 
+          class="h-12 mx-auto mb-4"
+        />
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Créer un compte</h2>
+        <p class="text-gray-600">Rejoignez la communauté Ndaamar</p>
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <p class="text-red-600 text-sm">{{ errorMessage }}</p>
+      </div>
+
+      <!-- Register Form -->
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <!-- Name Fields -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">
+              Prénom
+            </label>
+            <input
+              id="firstName"
+              type="text"
+              formControlName="firstName"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              placeholder="Votre prénom"
+              [class.border-red-500]="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched"
+            />
+            <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" class="mt-1 text-red-500 text-sm">
+              <span *ngIf="registerForm.get('firstName')?.errors?.['required']">Le prénom est requis</span>
+              <span *ngIf="registerForm.get('firstName')?.errors?.['minlength']">Le prénom doit contenir au moins 2 caractères</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">
+              Nom
+            </label>
+            <input
+              id="lastName"
+              type="text"
+              formControlName="lastName"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              placeholder="Votre nom"
+              [class.border-red-500]="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched"
+            />
+            <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="mt-1 text-red-500 text-sm">
+              <span *ngIf="registerForm.get('lastName')?.errors?.['required']">Le nom est requis</span>
+              <span *ngIf="registerForm.get('lastName')?.errors?.['minlength']">Le nom doit contenir au moins 2 caractères</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email Field -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+            Adresse email
+          </label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+            placeholder="votre@email.com"
+            [class.border-red-500]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+          />
+          <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="mt-1 text-red-500 text-sm">
+            <span *ngIf="registerForm.get('email')?.errors?.['required']">L'email est requis</span>
+            <span *ngIf="registerForm.get('email')?.errors?.['email']">Format d'email invalide</span>
+          </div>
+        </div>
+
+        <!-- Phone Field -->
+        <div>
+          <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
+            Téléphone
+          </label>
+          <input
+            id="phone"
+            type="tel"
+            formControlName="phone"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+            placeholder="7X XXX XX XX"
+            [class.border-red-500]="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched"
+          />
+          <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="mt-1 text-red-500 text-sm">
+            <span *ngIf="registerForm.get('phone')?.errors?.['required']">Le téléphone est requis</span>
+            <span *ngIf="registerForm.get('phone')?.errors?.['pattern']">Format de téléphone invalide (9 chiffres)</span>
+          </div>
+        </div>
+
+        <!-- Password Fields -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+              Mot de passe
+            </label>
+            <div class="relative">
+              <input
+                id="password"
+                [type]="showPassword ? 'text' : 'password'"
+                formControlName="password"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                placeholder="Votre mot de passe"
+                [class.border-red-500]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+              />
+              <button
+                type="button"
+                (click)="togglePasswordVisibility()"
+                class="absolute inset-y-0 right-0 flex items-center pr-3"
+              >
+                <svg *ngIf="!showPassword" class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <svg *ngIf="showPassword" class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                </svg>
+              </button>
+            </div>
+            <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="mt-1 text-red-500 text-sm">
+              <span *ngIf="registerForm.get('password')?.errors?.['required']">Le mot de passe est requis</span>
+              <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 8 caractères</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-2">
+              Confirmer le mot de passe
+            </label>
+            <div class="relative">
+              <input
+                id="confirmPassword"
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                formControlName="confirmPassword"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                placeholder="Confirmez votre mot de passe"
+                [class.border-red-500]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
+              />
+              <button
+                type="button"
+                (click)="toggleConfirmPasswordVisibility()"
+                class="absolute inset-y-0 right-0 flex items-center pr-3"
+              >
+                <svg *ngIf="!showConfirmPassword" class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <svg *ngIf="showConfirmPassword" class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                </svg>
+              </button>
+            </div>
+            <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="mt-1 text-red-500 text-sm">
+              <span *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">La confirmation est requise</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Password Mismatch Error -->
+        <div *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched" class="p-3 bg-red-50 border border-red-200 rounded-lg">
+          <p class="text-red-600 text-sm">Les mots de passe ne correspondent pas</p>
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div class="flex items-start">
+          <input
+            id="acceptTerms"
+            type="checkbox"
+            formControlName="acceptTerms"
+            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-1"
+          />
+          <label for="acceptTerms" class="ml-2 block text-sm text-gray-700">
+            J'accepte les 
+            <a href="#" class="text-blue-600 hover:text-blue-500">conditions d'utilisation</a>
+            et la 
+            <a href="#" class="text-blue-600 hover:text-blue-500">politique de confidentialité</a>
+          </label>
+        </div>
+        <div *ngIf="registerForm.get('acceptTerms')?.invalid && registerForm.get('acceptTerms')?.touched" class="mt-1 text-red-500 text-sm">
+          <span *ngIf="registerForm.get('acceptTerms')?.errors?.['required']">Vous devez accepter les conditions</span>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          [disabled]="registerForm.invalid || isLoading"
+          class="w-full bg-gradient-to-r from-green-600 to-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:from-green-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <span *ngIf="!isLoading">Créer mon compte</span>
+          <span *ngIf="isLoading" class="flex items-center justify-center">
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Création en cours...
+          </span>
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="my-6 flex items-center">
+        <div class="flex-1 border-t border-gray-300"></div>
+        <span class="px-4 text-sm text-gray-500">ou</span>
+        <div class="flex-1 border-t border-gray-300"></div>
+      </div>
+
+      <!-- Login Link -->
+      <div class="text-center">
+        <p class="text-gray-600">
+          Déjà un compte ?
+          <button
+            type="button"
+            (click)="goToLogin()"
+            class="text-blue-600 hover:text-blue-500 font-medium transition-colors"
+          >
+            Se connecter
+          </button>
+        </p>
+      </div>
+    </div>
+  </div>
+</div> 

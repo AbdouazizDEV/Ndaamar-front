@@ -1,0 +1,156 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Navbar -->
+  <app-navbar></app-navbar>
+
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white pt-20 pb-16">
+    <div class="absolute inset-0 bg-black opacity-20"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">
+          Nos Voitures
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 text-blue-100">
+          Découvrez notre sélection de voitures d'occasion de qualité
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 text-sm">
+          <span class="bg-white/20 px-4 py-2 rounded-full">500+ voitures</span>
+          <span class="bg-white/20 px-4 py-2 rounded-full">Toutes vérifiées</span>
+          <span class="bg-white/20 px-4 py-2 rounded-full">Prix transparents</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters Section -->
+  <section class="bg-white shadow-sm border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+        <!-- Search -->
+        <div class="lg:col-span-2">
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
+            (input)="applyFilters()"
+            placeholder="Rechercher une voiture..."
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </div>
+
+        <!-- Brand Filter -->
+        <div>
+          <select
+            [(ngModel)]="selectedBrand"
+            (change)="applyFilters()"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="">Toutes les marques</option>
+            <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
+          </select>
+        </div>
+
+        <!-- Price Range Filter -->
+        <div>
+          <select
+            [(ngModel)]="selectedPriceRange"
+            (change)="applyFilters()"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option *ngFor="let range of priceRanges" [value]="range.value">{{ range.label }}</option>
+          </select>
+        </div>
+
+        <!-- Fuel Type Filter -->
+        <div>
+          <select
+            [(ngModel)]="selectedFuelType"
+            (change)="applyFilters()"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="">Tous les carburants</option>
+            <option *ngFor="let fuel of fuelTypes" [value]="fuel">{{ fuel }}</option>
+          </select>
+        </div>
+
+        <!-- Clear Filters Button -->
+        <div class="flex items-center">
+          <button
+            (click)="clearFilters()"
+            class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition-colors"
+          >
+            Effacer
+          </button>
+        </div>
+      </div>
+
+      <!-- Active Filters -->
+      <div *ngIf="activeFiltersCount > 0" class="mt-4 flex flex-wrap gap-2">
+        <span class="text-sm text-gray-600">{{ activeFiltersCount }} filtre(s) actif(s)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="flex justify-center items-center py-12">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="text-center py-12">
+      <div class="text-red-600 text-lg mb-4">
+        Une erreur s'est produite lors du chargement des voitures.
+      </div>
+      <button 
+        (click)="loadCars()" 
+        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-medium transition-colors">
+        Réessayer
+      </button>
+    </div>
+
+    <!-- Results -->
+    <div *ngIf="!loading && !error">
+      <!-- Results Header -->
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-2xl font-bold text-gray-900">
+          {{ filteredCars.length }} voiture(s) trouvée(s)
+        </h2>
+        <div class="flex items-center space-x-4">
+          <span class="text-gray-600">Trier par :</span>
+          <select class="px-3 py-1 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+            <option>Prix croissant</option>
+            <option>Prix décroissant</option>
+            <option>Plus récentes</option>
+            <option>Plus anciennes</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Cars Grid -->
+      <div *ngIf="filteredCars.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div 
+          *ngFor="let car of filteredCars; trackBy: trackByCarId" 
+          class="car-card-animation"
+        >
+          <app-car-card [car]="car"></app-car-card>
+        </div>
+      </div>
+
+      <!-- No Results -->
+      <div *ngIf="filteredCars.length === 0" class="text-center py-12">
+        <div class="text-gray-500 text-lg mb-4">
+          Aucune voiture ne correspond à vos critères de recherche.
+        </div>
+        <button 
+          (click)="clearFilters()" 
+          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-medium transition-colors">
+          Effacer les filtres
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
+</div> 

@@ -1,0 +1,126 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Navbar -->
+  <app-navbar></app-navbar>
+
+  <!-- Hero Section -->
+  <app-hero></app-hero>
+
+  <!-- Main Content -->
+  <main class="pt-16">
+    <!-- Featured Cars Section -->
+    <section class="py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Voitures en vedette
+          </h2>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            Découvrez notre sélection de voitures d'occasion de qualité, 
+            toutes vérifiées et garanties par nos experts.
+          </p>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="loading" class="flex justify-center items-center py-12">
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+
+        <!-- Error State -->
+        <div *ngIf="error" class="text-center py-12">
+          <div class="text-red-600 text-lg mb-4">
+            Une erreur s'est produite lors du chargement des voitures.
+          </div>
+          <button 
+            (click)="loadCars()" 
+            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-medium transition-colors">
+            Réessayer
+          </button>
+        </div>
+
+        <!-- Cars Grid -->
+        <div *ngIf="!loading && !error" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <app-car-card 
+            *ngFor="let car of cars.slice(0, 6)" 
+            [car]="car">
+          </app-car-card>
+        </div>
+
+        <!-- View All Button -->
+        <div *ngIf="!loading && !error" class="text-center mt-12">
+          <button class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-md font-medium transition-colors">
+            Voir toutes les voitures
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Pourquoi choisir Ndaamar ?
+          </h2>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            Nous vous offrons une expérience d'achat sécurisée et transparente
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl">🔍</span>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Voitures vérifiées</h3>
+            <p class="text-gray-600">
+              Toutes nos voitures sont inspectées par des experts pour garantir leur qualité.
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl">💰</span>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Prix transparents</h3>
+            <p class="text-gray-600">
+              Pas de frais cachés, tous nos prix sont clairs et sans surprise.
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl">🛡️</span>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Achat sécurisé</h3>
+            <p class="text-gray-600">
+              Transactions sécurisées et assistance client disponible 24/7.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-blue-600">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+          Prêt à trouver votre voiture idéale ?
+        </h2>
+        <p class="text-xl text-blue-100 mb-8">
+          Rejoignez des milliers de clients satisfaits qui ont trouvé leur voiture sur Ndaamar.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button class="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-md font-medium transition-colors">
+            Commencer la recherche
+          </button>
+          <button class="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-md font-medium transition-colors">
+            Vendre ma voiture
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
+</div>
